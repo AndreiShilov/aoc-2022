@@ -35,12 +35,16 @@ fun main() {
         return list
     }
 
+    fun getCalMap3(input: List<String>): List<Int> {
+        return input.joinToString(",").split(",,").map { it.split(",").sumOf { cal -> cal.toInt() } }
+    }
+
     fun part1(input: List<String>): Int {
-        return getCalMap2(input).max()
+        return getCalMap3(input).max()
     }
 
     fun part2(input: List<String>): Int {
-        return getCalMap2(input)
+        return getCalMap3(input)
             .sortedDescending()
             .subList(0, 3)
             .sum()
