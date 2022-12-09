@@ -13,6 +13,7 @@ fun main() {
 
 
     fun moveTail(head: Pair<Int, Int>, tail: Pair<Int, Int>): Pair<Int, Int> {
+
         if (head == tail) return tail // same spot
 
         val i = head.first - tail.first //row
@@ -39,6 +40,12 @@ fun main() {
 
         if (i == -1 && j > 1) return Pair(tail.first - 1, tail.second + 1)
         if (i == -1 && j < -1) return Pair(tail.first - 1, tail.second - 1)
+
+        if (i > 1 && j > 1) return Pair(tail.first + 1, tail.second + 1)
+        if (i < -1 && j < -1) return Pair(tail.first - 1, tail.second - 1)
+
+        if (i > 1 && j < -1) return Pair(tail.first + 1, tail.second - 1)
+        if (i < -1 && j > 1) return Pair(tail.first - 1, tail.second + 1)
 
         return tail
     }
@@ -76,16 +83,20 @@ fun main() {
             val (direction, distance) = line.split(" ")
             val dInt = distance.toInt()
 
+            println("Times $dInt")
             repeat(dInt) {
                 rope[0] = moveHead(rope[0], direction)
                 for (i in 0 until rope.size - 1) {
-                    rope[i + 1] = moveTail(rope[i], rope[i + 1])
+
+                    val tail = rope[i + 1]
+                    rope[i + 1] = moveTail(rope[i], tail)
                 }
+                tailUniquePositions.add(rope.last())
             }
-            tailUniquePositions.add(rope.last())
+            println(rope)
+
         }
 
-        println(tailUniquePositions.size)
         return tailUniquePositions.size
     }
 
@@ -96,6 +107,8 @@ fun main() {
 
 
     val input = readInput("Day09")
-//    println("Part 1 = ${part1(input)}")
-//    println("Part 2 = ${part2(input)}")
+    println("Part 1 = ${part1(input)}")
+    println("Part 2 = ${part2(input)}")
 }
+
+
